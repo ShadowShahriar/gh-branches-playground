@@ -1,5 +1,5 @@
 # @format
-name: Copy source files to dev branch
+name: Copy source files to dev branch and build docs
 
 on:
     push:
@@ -16,7 +16,7 @@ jobs:
                   node-version: 17
             - name: run script from main branch
               run: node index.js
-            - name: push to dev branch
+            - name: copy src to dev branch
               uses: s0/git-publish-subdir-action@develop
               env:
                   REPO: self
@@ -25,9 +25,6 @@ jobs:
                   TARGET_DIR: src
                   MESSAGE: 'Copy source files to dev branch 🎉'
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    generate_docs:
-        runs-on: ubuntu-latest
-        steps:
             - uses: actions/checkout@v3.5.2
               with:
                   ref: dev
